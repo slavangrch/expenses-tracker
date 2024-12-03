@@ -11,6 +11,17 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { error } = require('./middleware/error');
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Controll-Allow-Methods',
+    'POST, GET, PUT, PATCH, DELETE'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  next();
+});
+
 app.use(bodyParser.json());
 app.use('/auth', userRoutes);
 app.use('/expenses', isAuth, expensesRoutes);
