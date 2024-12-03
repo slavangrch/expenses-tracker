@@ -31,11 +31,13 @@ export const Form = styled.form`
     width: 75%;
     align-self: center;
     padding: 0.8em;
+    border-radius: 4px;
     border: none;
     border-bottom: 2px solid var(--color-dark-gray);
     font-style: inherit;
     outline: none;
     background-color: inherit;
+    font-size: var(--font-medium);
   }
 
   input::placeholder {
