@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const ButtonS = styled.button<StyledButtonProps>`
-    background-color: var(--color-dark-gray);
+const ButtonStyled = styled.button<StyledButtonProps>`
+    background-color: ${(props) => `var(--color-${props.$background})` || 'var(--color-dark-gray)'};
     border: none;
-    width: ${(props) => props.width || "auto"};
+    width: ${(props) => props.$width || "auto"};
     border-radius: 5px;
     padding: 0.8rem 2rem;
     color: white;
@@ -18,16 +18,21 @@ const ButtonS = styled.button<StyledButtonProps>`
     }
 `;
 interface StyledButtonProps {
-    width?: string;
+    $width?: string,
+    $background?: string
   }
   
 interface ButtonProps {
     title: string,
-    width?: string
+    width?: string,
+    background?: string, 
+    onClick?: () => void,
+    // type?: "button" | "submit" | "reset"
 }
 
-export const Button: React.FC<ButtonProps> = ({title, width}) => {
+export const Button: React.FC<ButtonProps> = ({title, width, background, onClick}) => { 
+  // type="button"
   return (
-    <ButtonS width={width}>{title}</ButtonS>
+    <ButtonStyled onClick={onClick} $width={width} $background={background}>{title}</ButtonStyled>
   )
 }

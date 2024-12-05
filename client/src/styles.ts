@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MainLayout = styled.div`
+export const MainAuthLayout = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,4 +49,11 @@ export const Form = styled.form`
     text-decoration: none;
     color: var(--color-black);
   }
+`;
+
+export const MainLayout = styled.div`
+  width: 100%;
+  height: 100vh;
+  border: 2rem solid var(--color-gray);
+  border-left: 0;
 `;
