@@ -1,9 +1,17 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 exports.login = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation error!');
+      error.statusCode = 422;
+      error.data = errors.array();
+      throw error;
+    }
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
 
@@ -38,6 +46,13 @@ exports.login = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const error = new Error('Validation error!');
+      error.statusCode = 422;
+      error.data = errors.array();
+      throw error;
+    }
     const { username, email, password } = req.body;
     const existingUser = await User.findOne({ email: email });
 
