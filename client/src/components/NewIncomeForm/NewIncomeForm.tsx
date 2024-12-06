@@ -3,8 +3,7 @@ import styled from 'styled-components'
 import { BASE_URL } from '../../config'
 import { getToken } from '../../utils/localStorageManipulation'
 import { Button } from '../Button/Button'
-
-const NewExpenseFormStyled = styled.div`
+const NewIncomeFormStyled = styled.div`
 
     form {
         margin: 1rem;
@@ -45,10 +44,10 @@ const NewExpenseFormStyled = styled.div`
     }
 `
 
-interface NewExpenseFormProps {
+interface NewIncomeFormProps {
     closeModal: ()=>void
 }
-export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
+export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
     const token = getToken()
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
@@ -60,7 +59,7 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
 
         console.log(formObj);
 
-        const response = await fetch(`${BASE_URL}/expenses/addExpense`, {
+        const response = await fetch(`${BASE_URL}/incomes/addIncome`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -78,19 +77,15 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         closeModal()
     }
   return (
-    <NewExpenseFormStyled>
+    <NewIncomeFormStyled>
         <form onSubmit={submitHandler} action="">
         {/* {error&&<p>{error}</p>} */}
             <div className="input-control">
-                <label htmlFor="category">Category</label>
+                <label htmlFor="category">Source of income</label>
                 <select name="category" id="" >
                     <option value="select category">Select category</option>
-                    <option value="food">Food</option>
-                    <option value="car">Car</option>
-                    <option value="beauty">Beauty</option>
-                    <option value="appartment">Appartment</option>
-                    <option value="health">Health</option>
-                    <option value="none">None of above</option>
+                    <option value="food">Freelance</option>
+                    <option value="car">Developer job</option>
                 </select>
             </div>
             {/* {<div className="input-control">
@@ -114,6 +109,6 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
                 <Button background='green' title='Add'></Button>
             </div>
         </form>
-    </NewExpenseFormStyled>
+    </NewIncomeFormStyled>
   )
 }

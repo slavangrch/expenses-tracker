@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { MdOutlineDashboard, MdDelete } from "react-icons/md";
 
-const ExpenseItemStyled = styled.div`
- /* width: 80%; */
+const IncomeItemStyled = styled.div`
+  /* width: 80%; */
   /* width: max-content; */
   /* max-width: 400px; */
   width: 100%;
@@ -19,13 +19,13 @@ const ExpenseItemStyled = styled.div`
     font-size: 2.5rem;
   }
 
-  .expense-info {
+  .income-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
 
-  .expense-info_foot {
+  .income-info_foot {
     display: flex;
     gap: 10px;
   }
@@ -36,19 +36,19 @@ const ExpenseItemStyled = styled.div`
   }
 
 `
-export const ExpenseItem = () => {
+export const IncomeItem = () => {
   return (
-    <ExpenseItemStyled>
+    <IncomeItemStyled>
       <MdOutlineDashboard />
-      <div className="expense-info">
-        <h3>Food</h3>
-        <div className="expense-info_foot">
+      <div className="income-info">
+        <h3>Job</h3>
+        <div className="income-info_foot">
           <p>$ 120</p>
           <p>27/01/2022</p>
-          <p>No descripton</p>
+          <p>Developers</p>
         </div>
       </div>
       <MdDelete className='delete-icon' />
-    </ExpenseItemStyled>
+    </IncomeItemStyled>
   )
 }
