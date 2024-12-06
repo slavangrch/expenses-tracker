@@ -4,6 +4,8 @@ import { Button } from '../components/Button/Button';
 import { Modal } from '../components/Modal/Modal';
 import { NewIncomeForm } from '../components/NewIncomeForm/NewIncomeForm';
 import { IncomeItem } from '../components/IncomeItem/IncomeItem';
+import {useSelector} from 'react-redux'
+import { RootState } from '../store/index';
 
 
 const IncomesStyled = styled.div`
@@ -21,6 +23,9 @@ const IncomesStyled = styled.div`
 `;
 export const Incomes: React.FC = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const incomes = useSelector((state: RootState) => state.income)
+    console.log(incomes);
+    
 
     function closeModalHandler() {
         setModalIsOpen(false)

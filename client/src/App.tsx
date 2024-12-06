@@ -4,6 +4,8 @@ import { Dashboard } from "./pages/Dashboard";
 import { Expenses } from "./pages/Expenses";
 import { Incomes } from "./pages/Incomes";
 import { Menu } from "./components/Menu/Menu";
+import {Provider} from 'react-redux'
+import store from "./store/index";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,7 +19,8 @@ function App() {
   ])
 
   return (
-    <RouterProvider router={router}></RouterProvider>
+    <Provider store={store}><RouterProvider router={router}></RouterProvider></Provider>
+    
   );
 }
 

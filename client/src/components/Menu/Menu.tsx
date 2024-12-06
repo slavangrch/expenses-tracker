@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { menuItems } from '../../config'
 import { Link, Outlet, useNavigate } from 'react-router-dom'
@@ -66,6 +66,12 @@ export const Menu = () => {
     const [activeItemIndex, setActiveItemIndex] = useState('1');
     const navigate = useNavigate()
     const token = getToken();
+
+    useEffect(()=> {
+        if (!token || token==='EXPIRED') {
+            navigate('/auth?mode=login')
+        }
+    }, [token])
 
     if (!token || token==='EXPIRED') {
         navigate('/auth?mode=login')

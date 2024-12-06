@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { BASE_URL } from '../../config'
 import { getToken } from '../../utils/localStorageManipulation'
 import { Button } from '../Button/Button'
+import {useDispatch} from 'react-redux'
+import { incomeActions } from '../../store/income-slice'
+
 const NewIncomeFormStyled = styled.div`
 
     form {
@@ -49,6 +52,7 @@ interface NewIncomeFormProps {
 }
 export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
     const token = getToken()
+    const dispatch = useDispatch()
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -74,6 +78,8 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
         }
 
         const result = await response.json()
+        const {_id, description, amount, date} = result;
+        dispatch(incomeActions.addIncome({_id, description, amount, date}))
         closeModal()
     }
   return (

@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { BASE_URL } from '../../config'
 import { getToken } from '../../utils/localStorageManipulation'
 import { Button } from '../Button/Button'
+import { expenseActions } from '../../store/expense-slice'
+import {useDispatch} from 'react-redux'
 
 const NewExpenseFormStyled = styled.div`
 
@@ -50,6 +52,8 @@ interface NewExpenseFormProps {
 }
 export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
     const token = getToken()
+    const dispatch = useDispatch()
+    
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -75,6 +79,8 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         }
 
         const result = await response.json()
+        const {_id, description, amount, date} = result;
+        dispatch(expenseActions.addExpense({_id, description, amount, date}))
         closeModal()
     }
   return (

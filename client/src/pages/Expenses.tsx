@@ -4,6 +4,10 @@ import { ExpenseItem } from '../components/ExpenseItem/ExpenseItem';
 import { Button } from '../components/Button/Button';
 import { NewExpenseForm } from '../components/NewExpenseForm/NewExpenseForm';
 import { Modal } from '../components/Modal/Modal';
+import {useSelector} from 'react-redux'
+import { RootState } from '../store/index';
+import { getToken } from '../utils/localStorageManipulation';
+import { useNavigate } from 'react-router-dom';
 
 
 const ExpensesStyled = styled.div`
@@ -21,6 +25,10 @@ const ExpensesStyled = styled.div`
 `;
 export const Expenses: React.FC = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const expenses = useSelector((state: RootState) => state.expense)
+    console.log(expenses);
+    
 
     function closeModalHandler() {
         setModalIsOpen(false)
