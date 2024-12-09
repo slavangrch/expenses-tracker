@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MdOutlineDashboard, MdDelete } from "react-icons/md";
+import { Expense } from '../../store/expense-slice';
+import { iconCategoryMatches } from '../../config';
 
 const ExpenseItemStyled = styled.div`
  /* width: 80%; */
@@ -22,6 +24,7 @@ const ExpenseItemStyled = styled.div`
   .expense-info {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
   }
 
@@ -34,18 +37,31 @@ const ExpenseItemStyled = styled.div`
     cursor: pointer;
     font-size: 1.4rem;
   }
-
 `
-export const ExpenseItem = () => {
+interface ExpenseItemProps {
+  item: Expense
+}
+
+
+
+export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
+  let icon;
+  Object.keys(iconCategoryMatches).map(cat=>{
+    if (cat.toLowerCase() === item.category.toLowerCase()) {
+      icon = iconCategoryMatches[cat as keyof typeof iconCategoryMatches];
+    }
+  })
+  // console.log(item);
+  
+  
   return (
     <ExpenseItemStyled>
-      <MdOutlineDashboard />
+      {icon ? icon : iconCategoryMatches['none']}
       <div className="expense-info">
-        <h3>Food</h3>
+        <h3>{item.description}</h3>
         <div className="expense-info_foot">
-          <p>$ 120</p>
-          <p>27/01/2022</p>
-          <p>No descripton</p>
+          <p>${item.amount}</p>
+          <p>{new Date(item.date).toLocaleDateString()}</p>
         </div>
       </div>
       <MdDelete className='delete-icon' />

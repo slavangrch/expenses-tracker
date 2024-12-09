@@ -79,8 +79,9 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         }
 
         const result = await response.json()
-        const {_id, description, amount, date} = result;
-        dispatch(expenseActions.addExpense({_id, description, amount, date}))
+        const {_id, description, amount, category, date} = result.newExpense;
+        dispatch(expenseActions.addExpense({_id, description, amount, category,  date}))
+        
         closeModal()
     }
   return (
