@@ -78,8 +78,10 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
         }
 
         const result = await response.json()
-        const {_id, description, amount, date} = result;
-        dispatch(incomeActions.addIncome({_id, description, amount, date}))
+        const {_id, description, amount, category, date} = result.newIncome;
+        console.log(result);
+        
+        dispatch(incomeActions.addIncome({_id, description, amount, category, date}))
         closeModal()
     }
   return (
@@ -90,8 +92,9 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
                 <label htmlFor="category">Source of income</label>
                 <select name="category" id="" >
                     <option value="select category">Select category</option>
-                    <option value="food">Freelance</option>
-                    <option value="car">Developer job</option>
+                    <option value="freelance">Freelance</option>
+                    <option value="developer job">Developer job</option>
+                    <option value="none">None of above</option>
                 </select>
             </div>
             {/* {<div className="input-control">

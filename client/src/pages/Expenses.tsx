@@ -17,6 +17,8 @@ const ExpensesStyled = styled.div`
     padding: 20px;
     overflow-y: scroll;
     scrollbar-width: none;
+    overflow-y: scroll;
+    scrollbar-width: none;
 
     .expenses {
         display: flex;
@@ -31,11 +33,13 @@ export const Expenses: React.FC = () => {
     const {expenses} = useSelector((state: RootState) => state.expense)
     const dispatch = useDispatch<AppDispatch>();
     const token = getToken()
-    console.log(expenses);
+    // console.log(expenses);
     
 
     useEffect( () => {
-        dispatch(fetchExpensesData(token || ''))
+        if (token) {
+            dispatch(fetchExpensesData(token))
+        }
     }, [dispatch, token])
 
     function closeModalHandler() {

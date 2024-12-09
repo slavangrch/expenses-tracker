@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MdOutlineDashboard, MdDelete } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { Expense } from '../../store/expense-slice';
 import { iconCategoryMatches } from '../../config';
 
@@ -51,7 +51,6 @@ export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
       icon = iconCategoryMatches[cat as keyof typeof iconCategoryMatches];
     }
   })
-  // console.log(item);
   
   
   return (

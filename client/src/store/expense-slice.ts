@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import { BASE_URL } from '../config'
-import {AppThunk} from './index'
+import { AppThunk} from './index'
 
 
 export type Expense =  {
@@ -52,7 +52,6 @@ export const fetchExpensesData = (token: string): AppThunk => {
             }
 
             const result = await response.json()
-            // console.log(result);
             return result;
         }
 

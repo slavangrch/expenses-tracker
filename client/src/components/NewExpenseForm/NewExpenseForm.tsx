@@ -62,7 +62,7 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData.entries());
 
-        console.log(formObj);
+        // console.log(formObj);
 
         const response = await fetch(`${BASE_URL}/expenses/addExpense`, {
             method: 'POST',

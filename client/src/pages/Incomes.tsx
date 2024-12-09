@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../components/Button/Button';
 import { Modal } from '../components/Modal/Modal';
 import { NewIncomeForm } from '../components/NewIncomeForm/NewIncomeForm';
 import { IncomeItem } from '../components/IncomeItem/IncomeItem';
-import {useSelector} from 'react-redux'
-import { RootState } from '../store/index';
+import {useDispatch, useSelector} from 'react-redux'
+import { AppDispatch, RootState } from '../store/index';
+import { fetchIncomeData } from '../store/income-slice';
+import { getToken } from '../utils/localStorageManipulation';
 
 
 const IncomesStyled = styled.div`
@@ -23,9 +25,17 @@ const IncomesStyled = styled.div`
 `;
 export const Incomes: React.FC = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const incomes = useSelector((state: RootState) => state.income)
+    const {incomes} = useSelector((state: RootState) => state.income)
+    const token = getToken()
+    const dispatch = useDispatch<AppDispatch>()
     console.log(incomes);
     
+
+    useEffect(() => {
+        if (token) {
+            dispatch(fetchIncomeData(token))
+        }  
+    }, [dispatch, token])
 
     function closeModalHandler() {
         setModalIsOpen(false)
@@ -35,8 +45,7 @@ export const Incomes: React.FC = () => {
         {modalIsOpen && <Modal><NewIncomeForm closeModal={closeModalHandler}></NewIncomeForm></Modal>}
         <Button onClick={()=>setModalIsOpen(true)}  background='green' title='Add new income'></Button>
         <div className='incomes'>
-            <IncomeItem></IncomeItem>
-            <IncomeItem></IncomeItem>
+            {incomes && incomes.length>0 && incomes.map(inc=><IncomeItem key={inc._id} item={inc}></IncomeItem>)}
         </div>
     </IncomesStyled>
   )
