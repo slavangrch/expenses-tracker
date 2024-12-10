@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { menuItems } from '../../config'
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { MainLayout } from '../../styles'
 import { getToken } from '../../utils/localStorageManipulation'
 
@@ -63,13 +63,26 @@ const MenuStyled = styled.div`
 
  `
 export const Menu = () => {
-    const [activeItemIndex, setActiveItemIndex] = useState('1');
+    const location = useLocation()
+    const [activeItemIndex, setActiveItemIndex] = useState('');
     const navigate = useNavigate()
     const token = getToken();
 
-    if (!token || token==='EXPIRED') {
-        navigate('/auth?mode=login')
-    }
+
+    useEffect(() => {
+        menuItems.map(item=>{
+            if (`/${item.title.toLowerCase()}` === location.pathname) {
+                setActiveItemIndex(item.id)
+            }
+        })
+    }, [location])
+
+    useEffect(()=> {
+        if (!token || token==='EXPIRED') {
+            navigate('/auth?mode=login')
+        }
+    }, [token])
+
   return (
     <MenuStyled>
         <div className='navigation'>

@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { BASE_URL } from '../../config'
 import { getToken } from '../../utils/localStorageManipulation'
 import { Button } from '../Button/Button'
-import { expenseActions } from '../../store/expense-slice'
 import {useDispatch} from 'react-redux'
+import { incomeActions } from '../../store/income-slice'
 
-const NewExpenseFormStyled = styled.div`
+const NewIncomeFormStyled = styled.div`
 
     form {
         margin: 1rem;
@@ -47,13 +47,12 @@ const NewExpenseFormStyled = styled.div`
     }
 `
 
-interface NewExpenseFormProps {
+interface NewIncomeFormProps {
     closeModal: ()=>void
 }
-export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
+export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
     const token = getToken()
     const dispatch = useDispatch()
-    
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -62,9 +61,9 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData.entries());
 
-        // console.log(formObj);
+        console.log(formObj);
 
-        const response = await fetch(`${BASE_URL}/expenses/addExpense`, {
+        const response = await fetch(`${BASE_URL}/incomes/addIncome`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -79,24 +78,22 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
         }
 
         const result = await response.json()
-        const {_id, description, amount, category, date} = result.newExpense;
-        dispatch(expenseActions.addExpense({_id, description, amount, category,  date}))
+        const {_id, description, amount, category, date} = result.newIncome;
+        console.log(result);
         
+        dispatch(incomeActions.addIncome({_id, description, amount, category, date}))
         closeModal()
     }
   return (
-    <NewExpenseFormStyled>
+    <NewIncomeFormStyled>
         <form onSubmit={submitHandler} action="">
         {/* {error&&<p>{error}</p>} */}
             <div className="input-control">
-                <label htmlFor="category">Category</label>
+                <label htmlFor="category">Source of income</label>
                 <select name="category" id="" >
                     <option value="select category">Select category</option>
-                    <option value="food">Food</option>
-                    <option value="car">Car</option>
-                    <option value="beauty">Beauty</option>
-                    <option value="appartment">Appartment</option>
-                    <option value="health">Health</option>
+                    <option value="freelance">Freelance</option>
+                    <option value="developer job">Developer job</option>
                     <option value="none">None of above</option>
                 </select>
             </div>
@@ -121,6 +118,6 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
                 <Button background='green' title='Add'></Button>
             </div>
         </form>
-    </NewExpenseFormStyled>
+    </NewIncomeFormStyled>
   )
 }
