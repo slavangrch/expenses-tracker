@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import {  MdDelete } from "react-icons/md";
-import { Income } from '../../store/income-slice';
+import { Income, deleteIncome } from '../../store/income-slice';
 import { iconCategoryIncomesMatches } from '../../config';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { getToken } from '../../utils/localStorageManipulation';
 
 const IncomeItemStyled = styled.div`
   /* width: 80%; */
@@ -46,11 +49,18 @@ interface IncomeItemProps {
 }
 
 export const IncomeItem: React.FC<IncomeItemProps> = ({item}) => {
-
+  const dispatch = useDispatch<AppDispatch>()
+  const token = getToken()
   let icon;
   const isFoundKey = Object.keys(iconCategoryIncomesMatches).find(cat => cat.toLowerCase() === item.category.toLowerCase())
   if (isFoundKey) {
     icon = iconCategoryIncomesMatches[isFoundKey as keyof typeof iconCategoryIncomesMatches]
+  }
+
+  const deleteItem = async (id: string) => {
+    if (token) {
+      dispatch(deleteIncome(id, token))
+    }
   }
   
   return (
@@ -63,7 +73,7 @@ export const IncomeItem: React.FC<IncomeItemProps> = ({item}) => {
           <p>{new Date(item.date).toLocaleDateString()}</p>
         </div>
       </div>
-      <MdDelete className='delete-icon' />
+      <MdDelete onClick={()=>deleteItem(item._id)} className='delete-icon' />
     </IncomeItemStyled>
   )
 }

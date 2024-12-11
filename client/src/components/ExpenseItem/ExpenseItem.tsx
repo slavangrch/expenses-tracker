@@ -1,8 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MdDelete } from "react-icons/md";
-import { Expense } from '../../store/expense-slice';
+import { Expense, deleteExpense } from '../../store/expense-slice';
 import { iconCategoryMatches } from '../../config';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { getToken } from '../../utils/localStorageManipulation';
 
 const ExpenseItemStyled = styled.div`
  /* width: 80%; */
@@ -45,6 +48,8 @@ interface ExpenseItemProps {
 
 
 export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const token = getToken()
   let icon;
   Object.keys(iconCategoryMatches).map(cat=>{
     if (cat.toLowerCase() === item.category.toLowerCase()) {
@@ -52,6 +57,12 @@ export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
     }
   })
   
+  
+  const deleteItem = async (id: string) => {
+    if (token) {
+      dispatch(deleteExpense(id, token))
+    }
+  }
   
   return (
     <ExpenseItemStyled>
@@ -63,7 +74,7 @@ export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
           <p>{new Date(item.date).toLocaleDateString()}</p>
         </div>
       </div>
-      <MdDelete className='delete-icon' />
+      <MdDelete onClick={()=>deleteItem(item._id)} className='delete-icon' />
     </ExpenseItemStyled>
   )
 }

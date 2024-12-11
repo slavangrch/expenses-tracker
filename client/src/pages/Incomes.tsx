@@ -28,7 +28,7 @@ export const Incomes: React.FC = () => {
     const {incomes} = useSelector((state: RootState) => state.income)
     const token = getToken()
     const dispatch = useDispatch<AppDispatch>()
-    console.log(incomes);
+    // console.log(incomes);
     
 
     useEffect(() => {

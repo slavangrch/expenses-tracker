@@ -27,7 +27,7 @@ const expenseSlice = createSlice({
             state.expenses.push(action.payload)
         },
         deleteExpense(state, action: PayloadAction<string>) {
-            state.expenses.filter(exp=>exp._id !== action.payload)
+            state.expenses = state.expenses.filter(exp=>exp._id !== action.payload)
         }, 
         replaceExpenses(state, action: PayloadAction<Expense[]>) {
             state.expenses = action.payload;
@@ -61,6 +61,33 @@ export const fetchExpensesData = (token: string): AppThunk => {
                 return {_id: exp._id as string, description: exp.description as string, amount: exp.amount as number, category: exp.category as string, date: exp.date as string | Date}
             })
             dispatch(expenseActions.replaceExpenses(expensesArray))
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
+}
+
+
+export const deleteExpense = (id: string, token: string): AppThunk => {
+    return async (dispatch) => {
+        const deleteItem = async () => {
+            const response = await fetch(`http://localhost:5000/expenses/deleteExpense/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                const result = await response.json();
+                console.log(result);
+            }
+            return response;
+        }
+
+        try {
+            const result = await deleteItem();
+            dispatch(expenseActions.deleteExpense(id))
         } catch (error) {
             console.log(error);
             
