@@ -56,7 +56,6 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(token);
         
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData.entries());
