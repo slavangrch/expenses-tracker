@@ -66,7 +66,7 @@ export const ExpenseItem: React.FC<ExpenseItemProps> = ({item}) => {
   
   return (
     <ExpenseItemStyled>
-      {icon ? icon : iconCategoryMatches['none']}
+      {icon ? icon : iconCategoryMatches['other']}
       <div className="expense-info">
         <h3>{item.description}</h3>
         <div className="expense-info_foot">

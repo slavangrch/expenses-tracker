@@ -36,6 +36,7 @@ export const LoginForm: React.FC = () => {
     const result = await response.json();
     setToken(result.token);
     setExpirationDate();
+    localStorage.setItem('username', result.user)
 
     navigate('/dashboard')
   }

@@ -65,7 +65,7 @@ export const IncomeItem: React.FC<IncomeItemProps> = ({item}) => {
   
   return (
     <IncomeItemStyled>
-      {icon ? icon : iconCategoryIncomesMatches['none']}
+      {icon ? icon : iconCategoryIncomesMatches['other']}
       <div className="income-info">
         <h3>{item.description}</h3>
         <div className="income-info_foot">
