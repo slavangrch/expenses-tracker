@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { menuItems } from '../../config'
+import { BASE_URL, menuItems } from '../../config'
 import { Link, Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { MainLayout } from '../../styles'
-import { getToken } from '../../utils/localStorageManipulation'
+import { clearLocalStorage, getToken } from '../../utils/localStorageManipulation'
+import { Button } from '../Button/Button'
 
 const MenuStyled = styled.div`
     display: flex;
@@ -15,6 +16,8 @@ const MenuStyled = styled.div`
         height: 100vh;
         width: 15rem;
         color: white;
+        justify-content: space-between;
+        padding: 2rem 0;
     }
     
     .user-info {
@@ -22,7 +25,7 @@ const MenuStyled = styled.div`
         width: 100%;
         flex-direction: column;
         align-items: center;
-        margin: 3rem auto 5rem;
+        margin: 2rem auto 0;
         gap: 20px;
     }
 
@@ -61,12 +64,28 @@ const MenuStyled = styled.div`
         background-color: var(--color-dark-gray);
     }
 
+    .logout-btn {
+        text-align: center;
+        margin-bottom: -10px;
+    }
+    
+
  `
 export const Menu = () => {
     const location = useLocation()
     const [activeItemIndex, setActiveItemIndex] = useState('');
     const navigate = useNavigate()
     const token = getToken();
+    const username = localStorage.getItem('username')
+
+    function logoutHandler() {
+        // const response = await fetch(`${BASE_URL}/logout`)
+        // if (!response.ok) {
+        //     return;
+        // }
+        clearLocalStorage()
+        navigate('/auth?mode=login')
+    }
 
 
     useEffect(() => {
@@ -88,11 +107,12 @@ export const Menu = () => {
         <div className='navigation'>
             <div className='user-info'>
                 <img src="https://img.freepik.com/premium-vector/influencer-icon-vector-image-can-be-used-digital-nomad_120816-263441.jpg?semt=ais_hybrid" alt="Avatar" />
-                <p>Name</p>
-                </div>
-                <ul>
-                {menuItems.map(item=><Link key={item.id} to={`/${item.title.toLowerCase()}`}><div onClick={()=>setActiveItemIndex(item.id)} className={`menu-item ${activeItemIndex === item.id ? 'active' : ''}`}>{item.icon}<li >{item.title}</li></div></Link>)}
-                </ul>
+                <p>{username? username.charAt(0).toUpperCase()+username.slice(1): 'No name'}</p>
+            </div>
+            <ul>
+            {menuItems.map(item=><Link key={item.id} to={`/${item.title.toLowerCase()}`}><div onClick={()=>setActiveItemIndex(item.id)} className={`menu-item ${activeItemIndex === item.id ? 'active' : ''}`}>{item.icon}<li >{item.title}</li></div></Link>)}
+            </ul>
+            <div className='logout-btn'><Button onClick={logoutHandler} width='150px' background='dark-green' title='Logout'></Button></div>
         </div>
         <MainLayout>
             <Outlet></Outlet>

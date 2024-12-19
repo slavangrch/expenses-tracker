@@ -57,7 +57,6 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(token);
         
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData.entries());
@@ -92,18 +91,20 @@ export const NewExpenseForm: React.FC<NewExpenseFormProps> = ({closeModal}) => {
                 <label htmlFor="category">Category</label>
                 <select name="category" id="" >
                     <option value="select category">Select category</option>
-                    <option value="food">Food</option>
-                    <option value="car">Car</option>
-                    <option value="beauty">Beauty</option>
-                    <option value="appartment">Appartment</option>
-                    <option value="health">Health</option>
-                    <option value="none">None of above</option>
+                    <option value="rent">Rent</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="groceries">Groceries</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="education">Education</option>
+                    <option value="gym">Gym</option>
+                    <option value="travel">Travel</option>
+                    <option value="pets">Pets</option>
+                    <option value="gifts">Gifts</option>
+                    <option value="other">None of above</option>
                 </select>
             </div>
-            {/* {<div className="input-control">
-                <label htmlFor="category">Own category</label>
-                <input type="text" name='category'/>
-            </div>} */}
             <div className="input-control">
                 <label htmlFor="description">Description</label>
                 <input type="text" name='description'/>

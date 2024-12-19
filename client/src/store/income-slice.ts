@@ -26,7 +26,7 @@ const incomeSlice = createSlice({
             state.incomes.push(action.payload)
         },
         deleteIncome(state, action: PayloadAction<string>) {
-            state.incomes.filter(inc=>inc._id !== action.payload)
+            state.incomes = state.incomes.filter(inc=>inc._id !== action.payload)
         },
         replaceIncomes(state, action: PayloadAction<Income[]>) {
             state.incomes = action.payload;
@@ -66,6 +66,32 @@ export function fetchIncomeData(token: string): AppThunk {
         }
         
      }
+}
+
+export const deleteIncome = (id: string, token: string): AppThunk => {
+    return async (dispatch) => {
+        const deleteItem = async () => {
+            const response = await fetch(`http://localhost:5000/incomes/deleteIncome/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            if (!response.ok) {
+                const result = await response.json();
+                console.log(result);
+            }
+            return response;
+        }
+
+        try {
+            const result = await deleteItem();
+            dispatch(incomeActions.deleteIncome(id))
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
 }
 
 export const incomeActions =  incomeSlice.actions;

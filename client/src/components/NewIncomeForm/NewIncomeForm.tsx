@@ -56,7 +56,6 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
 
     async function submitHandler(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(token);
         
         const formData = new FormData(e.target as HTMLFormElement);
         const formObj = Object.fromEntries(formData.entries());
@@ -92,15 +91,14 @@ export const NewIncomeForm: React.FC<NewIncomeFormProps> = ({closeModal}) => {
                 <label htmlFor="category">Source of income</label>
                 <select name="category" id="" >
                     <option value="select category">Select category</option>
+                    <option value="salary">Salary</option>
+                    <option value="bonus">Bonus</option>
                     <option value="freelance">Freelance</option>
-                    <option value="developer job">Developer job</option>
-                    <option value="none">None of above</option>
+                    <option value="investments">Investments</option>
+                    <option value="gift">Gift</option>
+                    <option value="other">None of above</option>
                 </select>
             </div>
-            {/* {<div className="input-control">
-                <label htmlFor="category">Own category</label>
-                <input type="text" name='category'/>
-            </div>} */}
             <div className="input-control">
                 <label htmlFor="description">Description</label>
                 <input type="text" name='description'/>
